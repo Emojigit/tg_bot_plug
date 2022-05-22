@@ -1,4 +1,6 @@
-*
-!start
-!start/*
-!.gitignore
+/*
+!/start
+
+!/ping
+
+!/.gitignore

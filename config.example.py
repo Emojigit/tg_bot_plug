@@ -6,4 +6,4 @@ api_hash = '0123456789abcdef0123456789abcdef'
 bot_token = '12345:0123456789abcdef0123456789abcdef'
 
 # Enable plugin
-plugins_enabled = ["plugins.start"]
+plugins_enabled = ["plugins.start","plugins.ping"]
