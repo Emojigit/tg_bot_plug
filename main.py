@@ -65,6 +65,7 @@ for x in plugins:
     try:
         x.setup(bot,s)
     except TypeError: # Legacy plugins without storage field
+        print("\tWARNING: {} is a legacy plugin and cannot access the storage system.".format(x.__name__))
         x.setup(bot)
 txt_plugslist = "\n".join(txt_plugslist)
 
