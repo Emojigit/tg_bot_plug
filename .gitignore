@@ -130,3 +130,4 @@ dmypy.json
 
 bot.session
 config.py
+/data-*.json
