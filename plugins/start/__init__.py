@@ -5,6 +5,7 @@ __description__ = "Example of plugin"
 __dname__ = "start"
 
 from telethon import events
+import config
 def setup(bot,storage):
     @bot.on(events.NewMessage(pattern='/start'))
     async def start(event):
@@ -12,6 +13,8 @@ def setup(bot,storage):
         executed_times = storage.get("exectimes",0)
         executed_times += 1
         await event.respond('Hello, I am a bot!\nBot powered by Telegram Bot Plug\nExecuted: ' + str(executed_times))
+        if config.owner == event.sender.id:
+            await event.respond('Welcome back, owner.')
         storage.set("exectimes", executed_times)
         raise events.StopPropagation
 

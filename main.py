@@ -1,11 +1,13 @@
 import sys, asyncio, importlib, json
 from telethon import TelegramClient, functions, types, events
 from telethon.errors import *
+import os.path
 
 exit = sys.exit
 
 try:
     import config
+    sys.path.append(os.path.dirname(config.__file__))
 except ImportError:
     print("config.py not found, copying one for you...")
     import shutil
