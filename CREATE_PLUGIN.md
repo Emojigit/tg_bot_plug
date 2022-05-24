@@ -27,17 +27,34 @@ def setup(bot,storage):
 #### 簡單指令
 ```py
 @bot.on(events.NewMessage(pattern='/mycommand')) # mycommand == 命令名字
-    async def mycommand(event):
-        await event.respond("你好，世界。") # 使用 event.respond 在同一個聊天室回覆
-    raise events.StopPropagation # 沒有必要讓其他插件繼續處理這一條信息（
+async def mycommand(event):
+    await event.respond("你好，世界。") # 使用 event.respond 在同一個聊天室回覆
+raise events.StopPropagation # 沒有必要讓其他插件繼續處理這一條信息（
 ```
 #### 別人喵我也喵
 首先，通過[@botfather](https://t.me/botfather)將機器人的隱私模式關閉。
 ```py
 @bot.on(events.NewMessage()) # 匹配所有信息
-    async def meou_reply(event):
-        if "喵" in event.message.text: # 如果信息裏有喵
-            await event.respond("喵～") # 那麼我們也喵～
+async def meou_reply(event):
+    if "喵" in event.message.text: # 如果信息裏有喵
+        await event.respond("喵～") # 那麼我們也喵～
+```
+#### 儲存空間
+`def setup` 提供了一個 `storage`，就是儲存API。以下例子會儲存它所得到的信息，並在 `/text` 指令下吐出上一條信息：
+```py
+@bot.on(events.NewMessage(pattern='/text'))
+async def text(event):
+    last_text = storage.get("last_text","沒有信息喵～") # 第一個參數：儲存鍵；第二個參數：如果找不到那麼回覆啥
+    await event.respond(last_text) # 吐出去
+    raise events.StopPropagation # 沒有必要讓下面的程序繼續處理這一條信息喵～
+
+@bot.on(events.NewMessage()) # 匹配所有信息，除了/text，因爲 events.StopPropagation
+async def text_save(event):
+    text = event.message.text # 獲取信息內容
+    if text == None or text == "":
+        return # 不屑空信息
+    storage.set("last_text",text) # 第一個參數：儲存鍵；第二個參數：儲存值
+    # 不await.respond，我們暗中收集信息🤪
 ```
 #### 調用設定檔案
 由於設定檔在 `config.py`，而開發者已經非常貼心的把專案目錄加到 `sys.path` 中，所以可以直接以調用庫的方式調用設定檔：
