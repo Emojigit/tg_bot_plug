@@ -72,6 +72,8 @@ except AttributeError:
     print("主人，記得設定 config.custom_whatever 哦喵～") # 買萌換取主人注意（
     raise # 最後撒嬌（
 ```
+### 套用
+在 `config.py` 的 `plugins_enabled` 插入 `plugins.插件的名字` 就可以了喵，當然要重啓程序，這是廢話（
 ### 錯誤處理
 如在載入期間發生錯誤，程序並不會被中斷，而是直接暫時禁用插件，而且會在 `/plugslist` 指令顯示插件出錯，來提醒喵喵主人檢查喵喵身體：
 ```
