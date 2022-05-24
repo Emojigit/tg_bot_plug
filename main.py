@@ -2,6 +2,7 @@ import sys, asyncio, importlib, json
 from telethon import TelegramClient, functions, types, events
 from telethon.errors import *
 import os.path
+import traceback
 
 exit = sys.exit
 
@@ -65,10 +66,17 @@ for x in plugins:
     # Execute script
     s = Storage(x.__name__)
     try:
-        x.setup(bot,s)
-    except TypeError: # Legacy plugins without storage field
-        print("\tWARNING: {} is a legacy plugin and cannot access the storage system.".format(x.__name__))
-        x.setup(bot)
+        try:
+            x.setup(bot,s)
+        except TypeError: # Legacy plugins without storage field
+            print("\tWARNING: {} is a legacy plugin and cannot access the storage system.".format(x.__name__))
+            txt_plugslist.append("- ⚠️ Legacy Plugin")
+            x.setup(bot)
+    except:
+        print("\tERROR during loading plugin: " + x.__name__)
+        print(traceback.format_exc())
+        txt_plugslist.append("- ❌ Error During Load Time")
+
 txt_plugslist = "\n".join(txt_plugslist)
 
 @bot.on(events.NewMessage(pattern='/plugslist'))
