@@ -76,6 +76,9 @@ for x in plugins:
         print("\tERROR during loading plugin: " + x.__name__)
         print(traceback.format_exc())
         txt_plugslist.append("- ❌ Error During Load Time")
+    if "__moreinfo__" in dirs:
+        for y in x.__moreinfo__:
+            txt_plugslist.append("- {}".format(y))
 
 txt_plugslist = "\n".join(txt_plugslist)
 

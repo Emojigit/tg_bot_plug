@@ -3,6 +3,7 @@ __version__ = "1.0.0"
 __url__ = "https://github.com/Emojigit/tg_bot_plug"
 __description__ = "Example of plugin"
 __dname__ = "start"
+__moreinfo__ = ["Example __moreinfo__"]
 
 from telethon import events
 import config
